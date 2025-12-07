@@ -3,7 +3,6 @@ Module.register("MMM-Sentry-Monitoring", {
   defaults: {
     sentryAuthToken: "",
     sentryOrgSlug: "",
-    sentryProjectSlug: "",
     updateInterval: 30000,  // 30 seconds
     displayCount: 5,
     timeRange: "24h",
@@ -32,7 +31,7 @@ Module.register("MMM-Sentry-Monitoring", {
 
     // Validate configuration
     if (!this.validateConfig()) {
-      this.error = "Missing required configuration: sentryAuthToken, sentryOrgSlug, or sentryProjectSlug";
+      this.error = "Missing required configuration: sentryAuthToken or sentryOrgSlug";
       this.isLoading = false;
       return;
     }
@@ -51,8 +50,7 @@ Module.register("MMM-Sentry-Monitoring", {
    */
   validateConfig() {
     return this.config.sentryAuthToken &&
-      this.config.sentryOrgSlug &&
-      this.config.sentryProjectSlug;
+      this.config.sentryOrgSlug;
   },
 
   /**
@@ -107,7 +105,7 @@ Module.register("MMM-Sentry-Monitoring", {
           <div class="error-icon">⚙️</div>
           <div class="error-title">Configure MMM-Sentry-Monitoring</div>
           <div class="error-message">
-            Please set sentryAuthToken, sentryOrgSlug, and sentryProjectSlug in your config.
+            Please set sentryAuthToken and sentryOrgSlug in your config.
           </div>
         </div>
       `;

@@ -25,9 +25,9 @@ module.exports = NodeHelper.create({
    */
   fetchSentryIssues: function () {
     // Validate configuration
-    if (!this.config || !this.config.sentryAuthToken || !this.config.sentryOrgSlug || !this.config.sentryProjectSlug) {
+    if (!this.config || !this.config.sentryAuthToken || !this.config.sentryOrgSlug) {
       this.sendSocketNotification("SENTRY_ERROR", {
-        error: "Missing required configuration: sentryAuthToken, sentryOrgSlug, or sentryProjectSlug"
+        error: "Missing required configuration: sentryAuthToken or sentryOrgSlug"
       });
       return;
     }

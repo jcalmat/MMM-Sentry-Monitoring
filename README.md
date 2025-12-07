@@ -7,6 +7,10 @@ A [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror) module that dis
 - **Real-time monitoring** of errors from Sentry.io API
 - **Visual cards** with severity levels (🔴 error, 🟠 warning, 🔵 info)
 
+## Screenshots
+
+![Sample](./screenshots/sample.png)
+
 ## Installation
 
 ```bash

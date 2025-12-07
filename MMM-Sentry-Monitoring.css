@@ -1,0 +1,304 @@
+/* Main Container */
+.sentry-monitor {
+  max-width: 600px;
+  max-height: 900px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+.sentry-monitor::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sentry-monitor::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.sentry-monitor::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.sentry-monitor::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Header */
+.sentry-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.header-meta {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* Loading State */
+.sentry-loading {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.loading-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.loading-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Error State */
+.sentry-error {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(244, 67, 54, 0.1);
+  border: 2px solid rgba(244, 67, 54, 0.5);
+  border-radius: 8px;
+}
+
+.error-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.error-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #F44336;
+}
+
+.error-message {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 5px;
+}
+
+.error-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* Error Banner */
+.sentry-error-banner {
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(255, 152, 0, 0.2);
+  border: 1px solid rgba(255, 152, 0, 0.5);
+  border-radius: 6px;
+  font-size: 12px;
+  color: #FFC107;
+  text-align: center;
+}
+
+/* No Issues State */
+.sentry-no-issues {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.success-icon {
+  font-size: 64px;
+  margin-bottom: 15px;
+}
+
+.success-text {
+  font-size: 18px;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+/* Issues Container */
+.sentry-issues {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Error Card */
+.error-card {
+  display: flex;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  border: 2px solid;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.error-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Error Levels */
+.error-level-error {
+  border-color: #F44336;
+}
+
+.error-level-warning {
+  border-color: #FFC107;
+}
+
+.error-level-info {
+  border-color: #2196F3;
+}
+
+/* New Issue Pulse Animation */
+.error-card.new-issue {
+  animation: pulse 1s ease-in-out 3;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+/* Error Rank */
+.error-rank {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 30px;
+  flex-shrink: 0;
+}
+
+/* Error Main Content */
+.error-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.error-title {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 8px;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.error-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  flex-wrap: wrap;
+}
+
+.error-level {
+  font-weight: 600;
+}
+
+.error-count,
+.error-users {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Error Detail */
+.error-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 140px;
+  flex-shrink: 0;
+  align-items: flex-end;
+}
+
+.error-seen {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.error-percent {
+  text-align: right;
+}
+
+.percent-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.percent-bar {
+  width: 100px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.percent-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #FFC107, #F44336);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sentry-monitor {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .error-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .error-detail {
+    align-items: flex-start;
+  }
+
+  .error-percent {
+    text-align: left;
+  }
+}
+
+/* Fade-in animation for updates */
+.sentry-issues {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

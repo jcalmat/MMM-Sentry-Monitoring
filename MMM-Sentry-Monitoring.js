@@ -185,7 +185,7 @@ Module.register("MMM-Sentry-Monitoring", {
       const timeAgo = this.getTimeAgo(this.sentryData.lastUpdated);
       meta.innerHTML = `
         Last updated: ${timeAgo} | 
-        Total: ${this.sentryData.totalIssues} unresolved issues
+        Sample size: last ${this.sentryData.totalIssues} unresolved issues
       `;
     }
 
@@ -242,8 +242,7 @@ Module.register("MMM-Sentry-Monitoring", {
     meta.className = "error-meta";
 
     meta.innerHTML = `
-      <span class="error-project">${issue.project} | </span>
-      <span class="error-count">${issue.count} events</span>
+      <span class="error-project">${issue.project} | ${issue.count} events</span>
     `;
 
     main.appendChild(title);

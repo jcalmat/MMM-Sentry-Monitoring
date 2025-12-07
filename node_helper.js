@@ -38,7 +38,6 @@ module.exports = NodeHelper.create({
     const queryParams = new URLSearchParams({
       query: "is:unresolved",
       sort: sortBy === "freq" ? "freq" : "", // TODO: add other sort options
-      limit: displayCount || 5,
       statsPeriod: timeRange || "24h"
     });
 
@@ -117,7 +116,9 @@ module.exports = NodeHelper.create({
     }
 
     // Calculate total events count for percentage calculation
-    const totalCount = rawData.reduce((sum, issue) => sum + (issue.count || 0), 0);
+    const totalCount = rawData.reduce((sum, issue) => {
+      return sum + (Number(issue.count) || 0);
+    }, 0);
 
     // Apply filters and format issues
     const issues = rawData
@@ -127,6 +128,7 @@ module.exports = NodeHelper.create({
         const count = issue.count || 0;
         const users = issue.userCount || 0;
         const level = issue.level || "error";
+        const project = issue.project.slug || "unknown";
 
         return {
           id: issue.id || "",
@@ -135,6 +137,7 @@ module.exports = NodeHelper.create({
           level: level,
           count: count,
           users: users,
+          project: project,
           firstSeen: issue.firstSeen || null,
           lastSeen: issue.lastSeen || null,
           timeAgo: this.formatTimeAgo(issue.lastSeen),

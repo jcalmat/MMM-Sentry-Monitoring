@@ -241,11 +241,9 @@ Module.register("MMM-Sentry-Monitoring", {
     const meta = document.createElement("div");
     meta.className = "error-meta";
 
-    const levelIcon = this.getLevelIcon(issue.level);
     meta.innerHTML = `
-      <span class="error-level">${levelIcon} ${this.capitalize(issue.level)}</span>
+      <span class="error-project">${issue.project} | </span>
       <span class="error-count">${issue.count} events</span>
-      <span class="error-users">${issue.users} users</span>
     `;
 
     main.appendChild(title);
@@ -277,18 +275,6 @@ Module.register("MMM-Sentry-Monitoring", {
     card.appendChild(detail);
 
     return card;
-  },
-
-  /**
-   * Get icon for error level
-   */
-  getLevelIcon(level) {
-    switch (level) {
-      case "error": return "🔴";
-      case "warning": return "🟠";
-      case "info": return "🔵";
-      default: return "⚪";
-    }
   },
 
   /**

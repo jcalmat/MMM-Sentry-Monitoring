@@ -32,6 +32,9 @@
 
 /* Header */
 .sentry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 16px;
   padding: 16px;
   border-radius: 12px;
@@ -42,6 +45,10 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+.header-left {
+  flex: 1;
+}
+
 .header-title {
   font-size: 20px;
   font-weight: 500;
@@ -49,6 +56,17 @@
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 1.5px;
+}
+
+.header-total-errors {
+  font-size: 48px;
+  font-weight: 300;
+  color: #fff;
+  text-align: right;
+  font-family: "Roboto Mono", monospace;
+  letter-spacing: -1px;
+  line-height: 1;
+  min-width: 120px;
 }
 
 .header-meta {

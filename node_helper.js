@@ -125,8 +125,8 @@ module.exports = NodeHelper.create({
       .filter(issue => (issue.count || 0) >= (this.config.minEvents || 1))
       .slice(0, this.config.displayCount || 5)
       .map(issue => {
-        const count = issue.count || 0;
-        const users = issue.userCount || 0;
+        const count = Number(issue.count) || 0;
+        const users = Number(issue.userCount) || 0;
         const level = issue.level || "error";
         const project = issue.project.slug || "unknown";
 
@@ -153,6 +153,7 @@ module.exports = NodeHelper.create({
       issues: issues,
       lastUpdated: new Date().toISOString(),
       totalIssues: rawData.length,
+      totalEvents: totalCount,
       statusCode: 200
     };
   },

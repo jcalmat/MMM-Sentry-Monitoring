@@ -122,6 +122,12 @@ Module.register("MMM-Sentry-Monitoring", {
       `;
     }
 
+    // Update total errors
+    const headerTotalErrors = document.querySelector(".sentry-monitor .header-total-errors");
+    if (headerTotalErrors) {
+      headerTotalErrors.textContent = this.sentryData.totalEvents.toLocaleString();
+    }
+
     // Update each issue card
     this.sentryData.issues.forEach((issue, index) => {
       const rank = index + 1;
@@ -252,6 +258,9 @@ Module.register("MMM-Sentry-Monitoring", {
     const header = document.createElement("div");
     header.className = "sentry-header";
 
+    const headerLeft = document.createElement("div");
+    headerLeft.className = "header-left";
+
     const title = document.createElement("div");
     title.className = "header-title";
     title.textContent = "Sentry Error Monitor";
@@ -267,8 +276,20 @@ Module.register("MMM-Sentry-Monitoring", {
       `;
     }
 
-    header.appendChild(title);
-    header.appendChild(meta);
+    headerLeft.appendChild(title);
+    headerLeft.appendChild(meta);
+
+    const totalErrorsEl = document.createElement("div");
+    totalErrorsEl.className = "header-total-errors";
+
+    if (this.sentryData && this.sentryData.issues) {
+      totalErrorsEl.textContent = this.sentryData.totalEvents.toLocaleString();
+    } else {
+      totalErrorsEl.textContent = "0";
+    }
+
+    header.appendChild(headerLeft);
+    header.appendChild(totalErrorsEl);
 
     return header;
   },

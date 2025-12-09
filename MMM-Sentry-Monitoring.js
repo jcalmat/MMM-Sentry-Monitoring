@@ -60,19 +60,28 @@ Module.register("MMM-Sentry-Monitoring", {
     if (notification === "SENTRY_UPDATE") {
       this.isLoading = false;
 
-      // Track new issues for pulse animation
-      if (this.sentryData && this.sentryData.issues) {
+      // Check if issue list has changed (added or removed issues)
+      let issuesChanged = false;
+      if (this.sentryData && this.sentryData.issues && payload.issues) {
         const oldIds = new Set(this.sentryData.issues.map(i => i.id));
-        const newIds = payload.issues.map(i => i.id).filter(id => !oldIds.has(id));
+        const newIds = new Set(payload.issues.map(i => i.id));
+
+        // Check if any issues were added or removed
+        const added = payload.issues.filter(i => !oldIds.has(i.id));
+        const removed = this.sentryData.issues.filter(i => !newIds.has(i.id));
+
+        issuesChanged = added.length > 0 || removed.length > 0;
 
         // Add new issues to set for pulse animation
-        newIds.forEach(id => this.newIssueIds.add(id));
+        added.forEach(issue => this.newIssueIds.add(issue.id));
 
         // Remove old pulse animations after 10 seconds
-        setTimeout(() => {
-          newIds.forEach(id => this.newIssueIds.delete(id));
-          this.updateDom(300);
-        }, 10000);
+        if (added.length > 0) {
+          setTimeout(() => {
+            added.forEach(issue => this.newIssueIds.delete(issue.id));
+            this.updateDom(300);
+          }, 10000);
+        }
       }
 
       this.sentryData = payload;
@@ -81,13 +90,84 @@ Module.register("MMM-Sentry-Monitoring", {
       if (this.firstLoad) {
         this.updateDom(0);
         this.firstLoad = false;
-      } else {
+      } else if (issuesChanged) {
+        // Recreate DOM if issues were added or removed
         this.updateDom(300);
+      } else {
+        // Only update values if the same issues are present
+        this.updateValues();
       }
     } else if (notification === "SENTRY_ERROR") {
       this.isLoading = false;
       this.error = payload.error;
       this.updateDom(300);
+    }
+  },
+
+  /**
+   * Update only the values without recreating the DOM
+   */
+  updateValues() {
+    if (!this.sentryData || !this.sentryData.issues) {
+      return;
+    }
+
+    // Update header meta
+    const headerMeta = document.querySelector(".sentry-monitor .header-meta");
+    if (headerMeta && this.sentryData) {
+      const timeAgo = this.getTimeAgo(this.sentryData.lastUpdated);
+      headerMeta.innerHTML = `
+        Last updated: ${timeAgo} | 
+        Sample size: last ${this.sentryData.totalIssues} unresolved issues
+      `;
+    }
+
+    // Update each issue card
+    this.sentryData.issues.forEach((issue, index) => {
+      const rank = index + 1;
+      const card = document.querySelector(`.sentry-monitor .error-card[data-issue-id="${issue.id}"]`);
+
+      if (card) {
+        // Update card classes
+        card.className = `error-card error-level-${issue.level}`;
+        if (this.newIssueIds.has(issue.id)) {
+          card.classList.add("new-issue");
+        }
+        card.title = issue.title;
+
+        // Update rank
+        const rankEl = card.querySelector(".error-rank");
+        if (rankEl) rankEl.textContent = `${rank}.`;
+
+        // Update title
+        const titleEl = card.querySelector(".error-title");
+        if (titleEl) titleEl.textContent = issue.shortTitle;
+
+        // Update meta
+        const metaEl = card.querySelector(".error-meta");
+        if (metaEl) {
+          metaEl.innerHTML = `
+            <span class="error-project">${issue.project} | ${issue.count} events</span>
+          `;
+        }
+
+        // Update seen time
+        const seenEl = card.querySelector(".error-seen");
+        if (seenEl) seenEl.textContent = `Last: ${issue.timeAgo}`;
+
+        // Update percentage
+        const percentTextEl = card.querySelector(".percent-text");
+        if (percentTextEl) percentTextEl.textContent = `${issue.percentage}% of all errors`;
+
+        const percentFillEl = card.querySelector(".percent-fill");
+        if (percentFillEl) percentFillEl.style.width = `${issue.percentage}%`;
+      }
+    });
+
+    // Update error banner if present
+    const errorBanner = document.querySelector(".sentry-monitor .sentry-error-banner");
+    if (this.error && this.sentryData && errorBanner) {
+      errorBanner.innerHTML = `⚠️ ${this.error}`;
     }
   },
 
@@ -214,6 +294,7 @@ Module.register("MMM-Sentry-Monitoring", {
   renderIssueCard(issue, rank) {
     const card = document.createElement("div");
     card.className = `error-card error-level-${issue.level}`;
+    card.setAttribute("data-issue-id", issue.id);
 
     // Add new issue pulse animation
     if (this.newIssueIds.has(issue.id)) {

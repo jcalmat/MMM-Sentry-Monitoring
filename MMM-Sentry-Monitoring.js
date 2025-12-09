@@ -7,7 +7,8 @@ Module.register("MMM-Sentry-Monitoring", {
     displayCount: 5,
     timeRange: "24h",
     sortBy: "freq",  // freq, last_seen, first_seen
-    minEvents: 1
+    minEvents: 1,
+    environments: []  // e.g. ["production", "staging"]
   },
 
   /**

@@ -32,7 +32,7 @@ module.exports = NodeHelper.create({
       return;
     }
 
-    const { sentryOrgSlug, sentryAuthToken, sortBy, timeRange, displayCount } = this.config;
+    const { sentryOrgSlug, sentryAuthToken, sortBy, timeRange, displayCount, environments } = this.config;
 
     // Build query parameters
     const queryParams = new URLSearchParams({
@@ -40,6 +40,13 @@ module.exports = NodeHelper.create({
       sort: sortBy === "freq" ? "freq" : "", // TODO: add other sort options
       statsPeriod: timeRange || "24h"
     });
+
+    // Add multiple environment parameters if provided
+    if (environments && Array.isArray(environments) && environments.length > 0) {
+      environments.forEach(env => {
+        queryParams.append("environment", env);
+      });
+    }
 
     console.log(`[MMM-Sentry-Monitoring] Query Params: ${queryParams.toString()}`);
 

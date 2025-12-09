@@ -45,15 +45,16 @@ npm install
 
 ### Configuration Options
 
-| Option            | Type     | Default  | Description                                       |
-| ----------------- | -------- | -------- | ------------------------------------------------- |
-| `sentryAuthToken` | `string` | `""`     | **Required**. Token with `project:read` scope     |
-| `sentryOrgSlug`   | `string` | `""`     | **Required**. Organization slug                   |
-| `updateInterval`  | `number` | `30000`  | Update frequency (ms)                             |
-| `displayCount`    | `number` | `5`      | Number of errors displayed                        |
-| `sortBy`          | `string` | `"freq"` | Sort by: `freq`                                   |
-| `minEvents`       | `number` | `1`      | Minimum event count for the issue to be displayed |
-| `timeRange`       | `string` | `"24h"`  | Time range for stats (e.g., `1h`, `24h`, `7d`)    |
+| Option            | Type     | Default  | Description                                             |
+| ----------------- | -------- | -------- | ------------------------------------------------------- |
+| `sentryAuthToken` | `string` | `""`     | **Required**. Token with `project:read` scope           |
+| `sentryOrgSlug`   | `string` | `""`     | **Required**. Organization slug                         |
+| `updateInterval`  | `number` | `30000`  | Update frequency (ms)                                   |
+| `displayCount`    | `number` | `5`      | Number of errors displayed                              |
+| `sortBy`          | `string` | `"freq"` | Sort by: `freq`                                         |
+| `minEvents`       | `number` | `1`      | Minimum event count for the issue to be displayed       |
+| `timeRange`       | `string` | `"24h"`  | Time range for stats (e.g., `1h`, `24h`, `7d`)          |
+| `environments`    | `array`  | `[]`     | List of environments to filter (e.g., `["production"]`) |
 
 ## License
 
